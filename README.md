@@ -1,6 +1,9 @@
-# 🚦 ALB 5xx & Unhealthy Target Break-Fix
+# ALB 5xx & Unhealthy Target Break-Fix
 
 A hands-on troubleshooting and debugging project built on **AWS CloudFormation**, focusing on diagnosing and resolving **Application Load Balancer (ALB)** 5xx errors and unhealthy EC2 targets within an **Auto Scaling Group (ASG)**.
+
+![Alt text](thumbnail.png)
+
 
 ---
 
