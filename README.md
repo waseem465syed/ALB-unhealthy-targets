@@ -87,7 +87,7 @@ After applying fixes:
   ```
   Returns `200 OK`.
 
-![](curl-200)
+![curl successful](curl-200)
 
 
 ---
