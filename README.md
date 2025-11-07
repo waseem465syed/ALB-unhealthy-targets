@@ -1,21 +1,19 @@
 # ALB 5xx & Unhealthy Target Break-Fix
 
-A hands-on troubleshooting and debugging project built on **AWS CloudFormation**, focusing on diagnosing and resolving **Application Load Balancer (ALB)** 5xx errors and unhealthy EC2 targets within an **Auto Scaling Group (ASG)**.
-
-![Alt text](thumbnail.png)
+A hands-on troubleshooting and debugging project built on **AWS CloudFormation**, focusing on diagnosing and resolving **Application Load Balancer (ALB)** 504 errors and unhealthy EC2 targets within an **Auto Scaling Group (ASG)**.
 
 
----
 
-## 🧰 Overview
-
-In this project, you’ll deploy a broken-by-design architecture that simulates real-world networking and configuration issues faced by Cloud Engineers and Support Engineers.
-
-You’ll investigate **why the ALB targets are unhealthy** and **why 502/504 errors** occur, then fix them step-by-step using logs, metrics, and System Manager (SSM).
 
 ---
 
-## 🏗️ Architecture
+## Overview
+
+In this project, i investigated **why the ALB targets are unhealthy** and **why 504 errors** occur, then fix them step-by-step using logs, metrics, and System Manager (SSM).
+
+---
+
+## Architecture
 
 - **VPC** with two Availability Zones (AZs)  
 - **Public subnets** hosting the Application Load Balancer (ALB)  
@@ -23,22 +21,19 @@ You’ll investigate **why the ALB targets are unhealthy** and **why 502/504 err
 - **SSM Session Manager** enabled (no SSH needed)  
 - **VPC Flow Logs** to CloudWatch for packet inspection  
 
-The architecture is intentionally deployed with two issues:
-1. Incorrect ALB **health check path** (`/wrong` instead of `/health`)
-2. Missing **inbound rule** from ALB SG to EC2 SG on port `8080`
 
 ---
 
-## 🧩 Objectives
+## Objectives
 
-- Diagnose ALB 5xx and unhealthy targets  
+- Diagnose ALB 504 and unhealthy targets  
 - Use **Target Health**, **VPC Flow Logs**, **CloudWatch**, and **SSM**  
 - Verify connectivity, ports, and security group dependencies  
 - Fix and validate service recovery  
 
 ---
 
-## 🧪 Troubleshooting Process
+## Troubleshooting Process
 
 | Step | Action | AWS Tool |
 |------|--------|----------|
@@ -48,9 +43,11 @@ The architecture is intentionally deployed with two issues:
 | 4 | Examine user-data execution logs | `/var/log/cloud-init.log` |
 | 5 | Fix SG and health check configuration | Console / CLI |
 
+![health check target group](tg-unhealthy)
+
 ---
 
-## 🧰 Fix Summary
+## Fix Summary
 
 | Fault | Root Cause | Fix |
 |--------|-------------|-----|
@@ -59,22 +56,26 @@ The architecture is intentionally deployed with two issues:
 
 ---
 
-## ⚙️ Deployment
 
-```bash
-aws cloudformation deploy   --stack-name alb-breakfix   --template-file alb-breakfix.yaml   --capabilities CAPABILITY_NAMED_IAM
-```
 
 Retrieve ALB DNS:
 ```bash
-aws cloudformation describe-stacks   --stack-name alb-breakfix   --query "Stacks[0].Outputs[?OutputKey=='AlbDNSName'].OutputValue"   --output text
+aws cloudformation describe-stacks   --stack-name alb-unhealthy-targets   --query "Stacks[0].Outputs[?OutputKey=='AlbDNSName'].OutputValue"   --output text
 ```
 
 Visit the DNS in your browser to reproduce the 502/504 error.
 
+![Error 504 Time Out](504)
+
+- Curl test:
+Direct curl health check.
+```bash
+curl -i http://alb-unhe-ALB-BDYbncwJEp3H-391468550.eu-west-2.elb.amazonaws.com
+
+![Error 504 Time Out via Curl](curl-504)
 ---
 
-## ✅ Validation
+## Validation
 
 After applying fixes:
 
@@ -82,23 +83,12 @@ After applying fixes:
 - Browser: Application reachable
 - Curl test:
   ```bash
-  curl -I http://<ALB-DNS>/health
+  curl -i http://alb-unhe-ALB-BDYbncwJEp3H-391468550.eu-west-2.elb.amazonaws.com 
   ```
   Returns `200 OK`.
 
----
+![Successful Curl 200 OK](curl-200)
 
-## 🧹 Cleanup
-
-```bash
-aws cloudformation delete-stack --stack-name alb-breakfix
-```
-
----
-
-## 📸 Thumbnail
-
-![ALB 5xx & Unhealthy Target Break-Fix](A_2D_digital_diagram_illustrates_troubleshooting_a.png)
 
 ---
 
