@@ -2,7 +2,7 @@
 
 A hands-on troubleshooting and debugging project built on **AWS CloudFormation**, focusing on diagnosing and resolving **Application Load Balancer (ALB)** 504 errors and unhealthy EC2 targets within an **Auto Scaling Group (ASG)**.
 
-
+![](thumbnail.png)
 
 
 ---
@@ -43,7 +43,7 @@ In this project, i investigated **why the ALB targets are unhealthy** and **why 
 | 4 | Examine user-data execution logs | `/var/log/cloud-init.log` |
 | 5 | Fix SG and health check configuration | Console / CLI |
 
-![health check target group](tg-unhealthy)
+![health check target group](tg-unhealthy.png)
 
 ---
 
@@ -65,14 +65,14 @@ aws cloudformation describe-stacks   --stack-name alb-unhealthy-targets   --quer
 
 Visit the DNS in your browser to reproduce the 502/504 error.
 
-![Error 504 Time Out](504)
+![Error 504 Time Out](504.png)
 
 - Curl test:
 Direct curl health check.
 ```bash
 curl -i http://alb-unhe-ALB-BDYbncwJEp3H-391468550.eu-west-2.elb.amazonaws.com
 
-![Error 504 Time Out via Curl](curl-504)
+![Error 504 Time Out via Curl](curl-504.png)
 ---
 
 ## Validation
@@ -87,7 +87,7 @@ After applying fixes:
   ```
   Returns `200 OK`.
 
-![curl successful](curl-200)
+![curl successful](curl-200.png)
 
 
 ---
