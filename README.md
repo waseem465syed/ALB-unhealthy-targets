@@ -87,12 +87,12 @@ After applying fixes:
   ```
   Returns `200 OK`.
 
-![Successful Curl 200 OK](curl-200)
+![](curl-200)
 
 
 ---
 
-## 🧠 Skills Practiced
+##  Skills Practiced
 
 - CloudFormation (IaC)
 - Networking & Security Groups
