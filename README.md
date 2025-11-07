@@ -2,7 +2,6 @@
 
 A hands-on troubleshooting and debugging project built on **AWS CloudFormation**, focusing on diagnosing and resolving **Application Load Balancer (ALB)** 504 errors and unhealthy EC2 targets within an **Auto Scaling Group (ASG)**.
 
-![](thumbnail.png)
 
 
 ---
