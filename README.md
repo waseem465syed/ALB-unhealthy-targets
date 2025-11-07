@@ -71,8 +71,9 @@ Visit the DNS in your browser to reproduce the 502/504 error.
 Direct curl health check.
 ```bash
 curl -i http://alb-unhe-ALB-BDYbncwJEp3H-391468550.eu-west-2.elb.amazonaws.com
+```
+![curl Error 504 Time Out](curl-504.png)
 
-![Error 504 Time Out via Curl](curl-504.png)
 ---
 
 ## Validation
