@@ -58,17 +58,17 @@ In this project, i investigated **why the ALB targets are unhealthy** and **why 
 
 
 
-Retrieve ALB DNS:
+## Retrieve ALB DNS:
 ```bash
 aws cloudformation describe-stacks   --stack-name alb-unhealthy-targets   --query "Stacks[0].Outputs[?OutputKey=='AlbDNSName'].OutputValue"   --output text
 ```
 
-Visit the DNS in your browser to reproduce the 502/504 error.
+## Visit the DNS in your browser to reproduce the 502/504 error.
 
 ![Error 504 Time Out](504.png)
 
-- Curl test:
-Direct curl health check.
+## - Curl test:
+## Direct curl health check.
 ```bash
 curl -i http://alb-unhe-ALB-BDYbncwJEp3H-391468550.eu-west-2.elb.amazonaws.com
 ```
